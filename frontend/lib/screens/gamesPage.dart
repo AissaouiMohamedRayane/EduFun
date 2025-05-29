@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/models/users.dart';
 
-class Gamespage extends StatelessWidget {
+class Gamespage extends StatefulWidget {
+  @override
+  State<Gamespage> createState() => _GamespageState();
+}
+
+class _GamespageState extends State<Gamespage> {
   final int totalLevels = 10;
-  final int unlockedLevels = 5;
 
   final List<Offset> levelPositions = const [
     Offset(170, 70),
@@ -19,47 +25,48 @@ class Gamespage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // Background image
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/childSide/gamesMap.png',
-                fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) {
-                  return Center(child: Text('Image not found!'));
-                },
+    final childProvider = Provider.of<ChildProvider>(context);
+
+    return childProvider.isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : Scaffold(
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  // Background image
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/images/childSide/gamesMap.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+
+                  // Invisible level buttons
+                  ...List.generate(levelPositions.length, (index) {
+                    final isUnlocked = index < childProvider.child!.level!;
+                    final position = levelPositions[index];
+
+                    return Positioned(
+                      left: position.dx,
+                      top: position.dy,
+                      child: GestureDetector(
+                        onTap: isUnlocked
+                            ? () {
+                                print("Tapped Level ${index + 1}");
+                              }
+                            : null,
+                        child: Container(
+                          width: 80,
+                          height: 80,
+                          // Fully invisible but still clickable
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    );
+                  }),
+                ],
               ),
             ),
-
-            // Invisible level buttons
-            ...List.generate(levelPositions.length, (index) {
-              final isUnlocked = index < unlockedLevels;
-              final position = levelPositions[index];
-
-              return Positioned(
-                left: position.dx,
-                top: position.dy,
-                child: GestureDetector(
-                  onTap: isUnlocked
-                      ? () {
-                          print("Tapped Level ${index + 1}");
-                        }
-                      : null,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    // Fully invisible but still clickable
-                    color: Colors.transparent,
-                  ),
-                ),
-              );
-            }),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

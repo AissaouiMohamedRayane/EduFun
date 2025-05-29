@@ -35,3 +35,36 @@ Future<Parent?> getParent(String? token) async {
     return null;
   }
 }
+
+Future<bool> UpdateParent(String? token, String username, String email) async {
+  if (token == null) {
+    return false;
+  }
+
+  try {
+    final response = await http.put(
+      Uri.parse('$url/users/editParent/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token $token', // Note the 'Token' prefix
+      },
+      body: jsonEncode({'username': username, 'email': email}),
+    );
+
+    if (response.statusCode == 200) {
+      // Check for '200 OK'
+      // Customer update was successful
+      print('Customer updated successfully');
+      return true;
+      // Parse the response body to get the updated customer's ID
+    } else {
+      // Log detailed error information
+      print('Customer update failed with status: ${response.statusCode}');
+      print('Error: ${response.body}');
+      return false; // Return null to indicate an error occurred
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+    return false; // Return null to indicate an error occurred
+  }
+}

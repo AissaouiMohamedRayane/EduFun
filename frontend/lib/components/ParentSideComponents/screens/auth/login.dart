@@ -107,7 +107,7 @@ class _SignInState extends State<SignIn> {
                       // Email Input (Dynamic Placeholder)
                       _buildTextFieldSignIn(
                         label:
-                            isParentSelected ? "Enter Your Email" : "Family ID",
+                            isParentSelected ? "father username" : "kids username",
                         controller: emailController,
                         validator: (value) => (value == null || value.isEmpty)
                             ? "Field cannot be empty"
@@ -119,7 +119,7 @@ class _SignInState extends State<SignIn> {
                       // Password Input (Dynamic Placeholder)
                       _buildTextFieldSignIn(
                         label:
-                            isParentSelected ? "Enter Your Password" : "Own ID",
+                            isParentSelected ? "Enter Your Password" : "Family code",
                         controller: passwordController,
                         isPassword: true,
                         validator: (value) => (value == null || value.isEmpty)

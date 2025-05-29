@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Store/RewardStore.dart';
+import 'package:EduFun/components/ParentSideComponents/Store/RewardStore.dart';
 
 class Buy extends StatelessWidget {
   const Buy({super.key});

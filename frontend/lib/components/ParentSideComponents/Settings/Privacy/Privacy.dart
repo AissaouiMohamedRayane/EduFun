@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/PasswordChangeOverlay.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/PasswordChangeOverlay.dart';
 
 class Privacy extends StatefulWidget {
   const Privacy({super.key});

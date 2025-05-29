@@ -51,7 +51,7 @@ Future<int?> registerChild(String token, Map<String, dynamic> child) async {
         'username': child['username'],
         'first_name': child['firstName'],
         'last_name': child['lastName'],
-        'avatar': 2,
+        'avatar': 20,
         'dob': child['dob'],
         'gender': true,
       }),
@@ -67,6 +67,38 @@ Future<int?> registerChild(String token, Map<String, dynamic> child) async {
     } else {
       // The login failed
       print('Login failed with status: ${response.statusCode}');
+      print('Error: ${response.body}');
+      return null;
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+    return null;
+  }
+}
+
+Future<Child?> getChild(String? token) async {
+  if (token == null) {
+    return null;
+  }
+  try {
+    final response = await http.get(
+      Uri.parse('$url/users/getchild/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'token $token'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // The login was successful
+      final Map<String, dynamic> responseData =
+          json.decode(utf8.decode(response.bodyBytes));
+
+      // Save the token for future API requests (e.g., using shared_preferences)
+      return Child.fromJson(responseData);
+    } else {
+      // The login failed
+      print('fetching user failed with status: ${response.statusCode}');
       print('Error: ${response.body}');
       return null;
     }

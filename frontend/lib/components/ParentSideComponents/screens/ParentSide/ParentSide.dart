@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Netflixfirstpage/SelectKidScreen.dart';
-import 'package:frontend/components/ParentSideComponents/ActivitiesProgress.dart';
-import 'package:frontend/components/ParentSideComponents/Home/FamilyRank.dart';
-import 'package:frontend/components/ParentSideComponents/HeadingandDushboard.dart';
-import 'package:frontend/components/ParentSideComponents/KidInformation/Stricts.dart';
-import 'package:frontend/components/ParentSideComponents/Home/PreferredSubjects.dart';
-import 'package:frontend/components/ParentSideComponents/Home/ScreenTime.dart';
-import 'package:frontend/components/ParentSideComponents/ShowKidsDetails.dart';
+import 'package:EduFun/Netflixfirstpage/SelectKidScreen.dart';
+import 'package:EduFun/components/ParentSideComponents/ActivitiesProgress.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/FamilyRank.dart';
+import 'package:EduFun/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:EduFun/components/ParentSideComponents/KidInformation/Stricts.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/PreferredSubjects.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/ScreenTime.dart';
+import 'package:EduFun/components/ParentSideComponents/ShowKidsDetails.dart';
 import '../../../../services/models/users.dart';
 
 class ParentSide extends StatefulWidget {

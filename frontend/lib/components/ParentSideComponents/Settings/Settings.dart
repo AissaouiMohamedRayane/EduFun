@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/EditProfile.dart';
-import 'package:frontend/components/ParentSideComponents/HeadingandDushboard.dart';
-import 'package:frontend/components/ParentSideComponents/HelpAndSupportScreen.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/NotificationBar.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/PasswordChangeOverlay.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/Privacy/Privacy.dart';
-import 'package:frontend/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
-import 'package:frontend/components/ParentSideComponents/screens/familycontrole/EduFunPremiumScreen.dart';
-import 'package:frontend/services/models/users.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/EditProfile.dart';
+import 'package:EduFun/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:EduFun/components/ParentSideComponents/HelpAndSupportScreen.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/NotificationBar.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/PasswordChangeOverlay.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/Privacy/Privacy.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/familycontrole/EduFunPremiumScreen.dart';
+import 'package:EduFun/services/models/users.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final parentProvider = Provider.of<ParentProvider>(context);
     return Container(
-      decoration: BoxDecoration(color: Color.fromRGBO(223, 246, 242, 1)),
+      decoration: const BoxDecoration(color: Color.fromRGBO(223, 246, 242, 1)),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
                 _buildSettingsItem(
                   "Edit Profile Informations",
                   Icons.person,
-                  onTap: () => _navigateToEditProfile(context),
+                  onTap: () => _navigateToEditProfile(context, parentProvider),
                 ),
                 _buildSettingsItem(
                   "Change Password",
@@ -118,7 +118,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                               ),
                               Text(
-                                "Ruh Sik Hyatek a Sawim",
+                                "For a better experience",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.white.withOpacity(0.8),
@@ -156,10 +156,14 @@ class _SettingsState extends State<Settings> {
   }
 
   // Navigation methods for each setting item
-  void _navigateToEditProfile(BuildContext context) {
+  void _navigateToEditProfile(
+      BuildContext context, ParentProvider parentProvider) {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (context) => EditProfile()));
+    ).push(MaterialPageRoute(
+        builder: (context) => EditProfile(
+              parentProvider: parentProvider,
+            )));
   }
 
   void _navigateToChangePassword(BuildContext context) {

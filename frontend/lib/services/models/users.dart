@@ -8,10 +8,10 @@ import '../sharedPreferences/prefsAuth.dart';
 
 class Parent {
   final int id;
-  final String username;
-  final String email;
-  final int avatar;
-  final bool gender;
+  String username;
+  String email;
+  int avatar;
+  bool gender;
   final String familyCode;
 
   Parent(
@@ -65,7 +65,7 @@ class Child {
     required this.points,
     required this.hintsNumber,
     required this.avatar,
-    this.level,
+    required this.level,
     required this.fiftyAvailable,
   });
 
@@ -139,6 +139,17 @@ class ParentProvider with ChangeNotifier {
     return false;
   }
 
+  Future<bool> editParent(String username, String email) async {
+    final token = await getToken();
+    final bool ress = await UpdateParent(token, username, email);
+    if (ress) {
+      parent!.username = username;
+      parent!.email = email;
+    }
+    notifyListeners();
+    return ress;
+  }
+
   Future<void> logoutParent() async {
     final token = await getToken();
     await logout(token);
@@ -147,6 +158,32 @@ class ParentProvider with ChangeNotifier {
     _isLoading = true;
     parent = null;
     children = [];
+    notifyListeners();
+  }
+}
+
+class ChildProvider with ChangeNotifier {
+  Child? child;
+  bool _isLoading = true;
+
+  bool get isLoading => _isLoading;
+
+  Future<void> initializeChild() async {
+    _isLoading = true;
+
+    String? token = await getToken();
+    child = await getChild(token);
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> logoutChild() async {
+    final token = await getToken();
+    await logout(token);
+    await removeToken();
+
+    _isLoading = true;
+    child = null;
     notifyListeners();
   }
 }

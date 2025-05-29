@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import 'package:frontend/components/ParentSideComponents/screens/Utilities/slectAvatar.dart';
-import 'package:frontend/components/ParentSideComponents/BottomNavBar.dart';
-import 'package:frontend/components/forms/childForm.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/Utilities/slectAvatar.dart';
+import 'package:EduFun/components/ParentSideComponents/BottomNavBar.dart';
+import 'package:EduFun/components/forms/childForm.dart';
 
-import 'package:frontend/services/API/child.dart';
+import 'package:EduFun/services/API/child.dart';
 
 import '../../../../../services/models/users.dart';
 import '../../../../../services/models/token.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/API/auth.dart';
 
-import 'package:frontend/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
 
 // Parent Form Class
 class ParentForm extends StatefulWidget {

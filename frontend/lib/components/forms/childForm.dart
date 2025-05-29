@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
-import 'package:frontend/components/ParentSideComponents/screens/auth/registration/childNextPage.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/registration/childNextPage.dart';
 import '../../services/models/users.dart';
 
 class ChildForm extends StatefulWidget {

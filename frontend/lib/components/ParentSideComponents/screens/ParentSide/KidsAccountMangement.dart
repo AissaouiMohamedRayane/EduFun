@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/HeadingandDushboard.dart';
-import 'package:frontend/components/forms/childForm.dart';
+import 'package:EduFun/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:EduFun/components/forms/childForm.dart';
 
 class KidsAccountManagement extends StatefulWidget {
   const KidsAccountManagement({super.key});

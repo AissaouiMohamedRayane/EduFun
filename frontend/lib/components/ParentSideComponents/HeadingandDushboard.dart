@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Home/Notification.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/EditProfile.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/NotificationBar.dart';
-import 'package:frontend/components/ParentSideComponents/Store/RewardStore.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/Settings.dart';
-import 'package:frontend/main.dart';
-import 'package:frontend/components/ParentSideComponents/screens/Utilities/showSwitchAccountOverlay.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/Notification.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/EditProfile.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/NotificationBar.dart';
+import 'package:EduFun/components/ParentSideComponents/Store/RewardStore.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/Settings.dart';
+import 'package:EduFun/main.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/Utilities/showSwitchAccountOverlay.dart';
 
 class Heading extends StatelessWidget {
   const Heading({super.key});

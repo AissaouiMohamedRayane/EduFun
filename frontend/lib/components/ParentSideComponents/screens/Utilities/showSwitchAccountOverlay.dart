@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/main.dart';
-import 'package:frontend/components/ParentSideComponents/screens/Utilities/SwitchKidsAccountOverlay.dart';
+import 'package:EduFun/main.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/Utilities/SwitchKidsAccountOverlay.dart';
 
 class SwitchAccount extends StatefulWidget {
   const SwitchAccount({super.key});

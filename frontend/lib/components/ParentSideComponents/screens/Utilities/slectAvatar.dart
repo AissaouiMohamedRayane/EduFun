@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Netflixfirstpage/SelectKidScreen.dart';
-import 'package:frontend/components/ParentSideComponents/BottomNavBar.dart';
+import 'package:EduFun/Netflixfirstpage/SelectKidScreen.dart';
+import 'package:EduFun/components/ParentSideComponents/BottomNavBar.dart';
 
 class SelectAvatar extends StatefulWidget {
   const SelectAvatar({super.key});

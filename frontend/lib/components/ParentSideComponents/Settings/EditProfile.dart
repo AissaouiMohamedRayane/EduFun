@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:EduFun/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:provider/provider.dart';
+import '../../../services/models/users.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  final ParentProvider parentProvider;
+  const EditProfile({super.key, required this.parentProvider});
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -10,53 +13,27 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   // Create controllers for each editable field
-  final TextEditingController _fullNameController = TextEditingController(
-    text: "UserName",
-  );
-  final TextEditingController _emailController = TextEditingController(
-    text: "abcd@gmail.com",
-  );
-  final TextEditingController _phoneController = TextEditingController(
-    text: "+213 00 00 00 00",
-  );
-  final TextEditingController _dobController = TextEditingController(
-    text: "day / month /  year",
-  );
-  final TextEditingController _pobController = TextEditingController(
-    text: "Dellys",
-  );
-  final TextEditingController _addressController = TextEditingController(
-    text: "...",
-  );
-  final TextEditingController _genderController = TextEditingController(
-    text: "Male",
-  );
-  final TextEditingController _statusController = TextEditingController(
-    text: "Single",
-  );
+  TextEditingController _fullNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   // Track which fields are being edited
   bool _editingFullName = false;
   bool _editingEmail = false;
-  bool _editingPhone = false;
-  bool _editingDob = false;
-  bool _editingPob = false;
-  bool _editingAddress = false;
-  bool _editingGender = false;
-  bool _editingStatus = false;
 
   @override
   void dispose() {
     // Dispose all controllers when the widget is disposed
     _fullNameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose();
-    _dobController.dispose();
-    _pobController.dispose();
-    _addressController.dispose();
-    _genderController.dispose();
-    _statusController.dispose();
+
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fullNameController.text = widget.parentProvider.parent!.username;
+    _emailController.text = widget.parentProvider.parent!.email;
   }
 
   @override
@@ -72,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
             _buildSectionTitle("Manage your personal details"),
             const SizedBox(height: 20),
             _buildEditableProfileField(
-              label: "Full Name",
+              label: "username",
               controller: _fullNameController,
               isEditing: _editingFullName,
               onEdit: () => setState(() => _editingFullName = true),
@@ -85,50 +62,8 @@ class _EditProfileState extends State<EditProfile> {
               onEdit: () => setState(() => _editingEmail = true),
               onSave: () => setState(() => _editingEmail = false),
             ),
-            _buildEditableProfileField(
-              label: "Phone Number",
-              controller: _phoneController,
-              isEditing: _editingPhone,
-              onEdit: () => setState(() => _editingPhone = true),
-              onSave: () => setState(() => _editingPhone = false),
-            ),
-            _buildEditableProfileField(
-              label: "Date of birth",
-              controller: _dobController,
-              isEditing: _editingDob,
-              onEdit: () => setState(() => _editingDob = true),
-              onSave: () => setState(() => _editingDob = false),
-            ),
-            _buildEditableProfileField(
-              label: "Place of birth",
-              controller: _pobController,
-              isEditing: _editingPob,
-              onEdit: () => setState(() => _editingPob = true),
-              onSave: () => setState(() => _editingPob = false),
-            ),
-            _buildEditableProfileField(
-              label: "Address",
-              controller: _addressController,
-              isEditing: _editingAddress,
-              onEdit: () => setState(() => _editingAddress = true),
-              onSave: () => setState(() => _editingAddress = false),
-            ),
-            _buildEditableProfileField(
-              label: "Gender",
-              controller: _genderController,
-              isEditing: _editingGender,
-              onEdit: () => setState(() => _editingGender = true),
-              onSave: () => setState(() => _editingGender = false),
-            ),
-            _buildEditableProfileField(
-              label: "Status",
-              controller: _statusController,
-              isEditing: _editingStatus,
-              onEdit: () => setState(() => _editingStatus = true),
-              onSave: () => setState(() => _editingStatus = false),
-            ),
             const SizedBox(height: 30),
-            _buildSaveAllButton(),
+            _buildSaveAllButton(widget.parentProvider),
           ],
         ),
       ),
@@ -179,54 +114,56 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 4),
           isEditing
               ? Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      decoration: const InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
-                        border: InputBorder.none,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.check, color: Colors.green),
-                    onPressed: onSave,
-                  ),
-                ],
-              )
+                    IconButton(
+                      icon: const Icon(Icons.check, color: Colors.green),
+                      onPressed: onSave,
+                    ),
+                  ],
+                )
               : Text(
-                controller.text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  controller.text,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
           const Divider(height: 20),
         ],
       ),
     );
   }
 
-  Widget _buildSaveAllButton() {
+  Widget _buildSaveAllButton(ParentProvider parentProvider) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Profile updated successfully")),
-            );
+            if (_editingEmail || _editingFullName) {
+              _submitForm(parentProvider);
+            }
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: const Color(0xFF2086CB),
+            backgroundColor: _editingEmail || _editingFullName
+                ? const Color(0xFF2086CB)
+                : const Color.fromARGB(255, 141, 179, 205),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -242,5 +179,41 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  Future<void> _submitForm(ParentProvider parentProvider) async {
+    bool isEmail(String? email) {
+      final emailRegex = RegExp(
+        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+      );
+      return emailRegex.hasMatch(email ?? '');
+    }
+
+    if (isEmail(_emailController.text)) {
+      final bool success = await parentProvider.editParent(
+          _fullNameController.text, _emailController.text);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Profile updated successfully"),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Profile updated failed"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Wrong email format"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

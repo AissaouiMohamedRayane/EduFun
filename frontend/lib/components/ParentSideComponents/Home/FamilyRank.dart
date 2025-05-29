@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Home/Ranking.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/Ranking.dart';
 
 class FamilyRank extends StatefulWidget {
   const FamilyRank({super.key});

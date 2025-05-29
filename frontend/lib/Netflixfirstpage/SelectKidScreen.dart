@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/BottomNavBar.dart';
-import 'package:frontend/components/forms/childForm.dart';
+import 'package:EduFun/components/ParentSideComponents/BottomNavBar.dart';
+import 'package:EduFun/components/forms/childForm.dart';
 import 'package:provider/provider.dart';
 import '../services/models/users.dart';
 import '../services/models/token.dart';
+import 'package:flutter/services.dart';
 
 class SelectKidScreen extends StatefulWidget {
   const SelectKidScreen({Key? key}) : super(key: key);
@@ -54,18 +55,51 @@ class _SelectKidScreenState extends State<SelectKidScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset("assets/images/1.png",
-                                  height: 60, width: 60),
-                              const SizedBox(width: 10),
-                              Text(
-                                parentProvider.parent!.username,
-                                style: const TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Row(
+                                children: [
+                                  Image.asset("assets/images/1.png",
+                                      height: 60, width: 60),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    parentProvider.parent!.username,
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
+                              Row(
+                                children: [
+                                  Text(
+                                    parentProvider.parent!.familyCode,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 2, 18, 32),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: parentProvider.parent!.familyCode));
+                                        // Optional: Show confirmation
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content:
+                                                  Text("Copied to clipboard")),
+                                        );
+                                      },
+                                      icon: Icon(Icons.copy))
+                                ],
+                              )
                             ],
                           ),
                           const SizedBox(height: 30),

@@ -1,8 +1,8 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:frontend/components/forms/childForm.dart';
-import 'package:frontend/components/forms/parentForm.dart';
-import 'package:frontend/components/ParentSideComponents/screens/auth/login.dart';
+import 'package:EduFun/components/forms/childForm.dart';
+import 'package:EduFun/components/forms/parentForm.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/login.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

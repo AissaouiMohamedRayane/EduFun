@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Store/RewardStore.dart';
-import 'package:frontend/components/ParentSideComponents/Settings/Settings.dart';
-import 'package:frontend/components/ParentSideComponents/screens/ParentSide/ParentSide.dart';
+import 'package:EduFun/components/ParentSideComponents/Store/RewardStore.dart';
+import 'package:EduFun/components/ParentSideComponents/Settings/Settings.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/ParentSide/ParentSide.dart';
 import '../../services/models/users.dart';
 
 class BottomNavBar extends StatefulWidget {

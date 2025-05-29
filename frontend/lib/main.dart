@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
-import 'package:frontend/components/ParentSideComponents/SwitchAccount.dart';
-import 'package:frontend/components/ParentSideComponents/screens/Utilities/SwitchKidsAccountOverlay.dart';
-import 'package:frontend/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
-import 'package:frontend/Netflixfirstpage/SelectKidScreen.dart';
+import 'package:EduFun/components/ParentSideComponents/SwitchAccount.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/Utilities/SwitchKidsAccountOverlay.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/auth/registration/Mychoice.dart';
+import 'package:EduFun/Netflixfirstpage/SelectKidScreen.dart';
 
+import 'screens/home.dart';
 import 'screens/gamesPage.dart';
 
 import 'package:flutter/services.dart';
@@ -16,6 +18,7 @@ import './services/sharedPreferences/prefsAuth.dart';
 import './services/API/auth.dart';
 
 import './services/models/users.dart';
+import './services/models/store.dart';
 import './services/models/token.dart';
 
 void main() async {
@@ -33,6 +36,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ParentProvider()),
         ChangeNotifierProvider(create: (_) => TokenProvider()),
+        ChangeNotifierProvider(create: (_) => StoreProvider()),
+        ChangeNotifierProvider(create: (_) => ChildProvider()),
       ],
       child: MyApp(
         showIntro: isFirstTime,
@@ -54,7 +59,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins', // Apply globally
       ),
       routes: {
-        '/gamesPage': (context) => Gamespage(),
+        '/childSideHome': (context) => ChildSideHome(),
+        '/childSideHome/games': (context) => Gamespage(),
         '/login': (context) => const LoginPage(),
         '/parentHome': (context) => SelectKidScreen(),
       },
@@ -82,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (ress) {
       bool? isparent = await isParent();
       if (isparent == false) {
-        Navigator.pushReplacementNamed(context, '/gamesPage');
+        Navigator.pushReplacementNamed(context, '/childSideHome');
       } else {
         Navigator.pushReplacementNamed(context, '/parentHome');
       }
@@ -111,12 +117,29 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  final PageController _pageController = PageController();
+  late PageController _pageController = PageController();
   int _currentPage = 0;
   @override
   void initState() {
     super.initState();
     _initPrefs(); // Call the async method
+    _videoController =
+        VideoPlayerController.asset("assets/videos/background.mp4")
+          ..initialize().then((_) {
+            setState(() {});
+            _videoController.setLooping(true);
+            _videoController.setVolume(0);
+            _videoController.play();
+          });
+
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> _initPrefs() async {
@@ -124,62 +147,76 @@ class _DetailsScreenState extends State<DetailsScreen> {
     prefs.setBool('isFirstTime', false);
   }
 
+  late VideoPlayerController _videoController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const SizedBox(height: 30),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildPage(
-                  title: "Welcome To Edu Fun",
-                  subtitle: "Thank you for downloading the EDUFUN app",
-                  description: "With this application, you can...",
-                ),
-                _buildPage(
-                  title: "Take Control!!",
-                  subtitle:
-                      "Manage your child's phone activity while ensuring a fun and safe digital experience!",
-                ),
-                _buildPage(
-                  title: "Learn and Play!",
-                  subtitle:
-                      "Access educational content and fun activities designed for kids of all ages!",
-                ),
-                _buildPage(
-                  title: "Monitor Usage",
-                  subtitle:
-                      "Track screen time, set daily limits, and keep an eye on app usage.",
-                ),
-                _buildPage(
-                  title: "Parental Guidance",
-                  subtitle:
-                      "Get insights on your child's activity and guide them with educational content.",
-                ),
-                _buildLastPage(
-                  context: context,
-                  title: "Safe & Fun Learning",
-                  subtitle:
-                      "Ensure your child has a safe and enjoyable learning experience with EduFun!",
-                  buttonText: "Get Started",
-                ),
-              ],
+      body: Stack(children: [
+        SizedBox.expand(
+          child: FittedBox(
+            fit: BoxFit.fill,
+            child: SizedBox(
+              width: _videoController.value.size.width,
+              height: _videoController.value.size.height,
+              child: VideoPlayer(_videoController),
             ),
           ),
-          _buildIndicator(),
-          const SizedBox(height: 20),
-        ],
-      ),
+        ),
+        Column(
+          children: [
+            const SizedBox(height: 30),
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildPage(
+                    title: "Welcome To Edu Fun",
+                    subtitle: "Thank you for downloading the EDUFUN app",
+                    description: "With this application, you can...",
+                  ),
+                  _buildPage(
+                    title: "Take Control!!",
+                    subtitle:
+                        "Manage your child's phone activity while ensuring a fun and safe digital experience!",
+                  ),
+                  _buildPage(
+                    title: "Learn and Play!",
+                    subtitle:
+                        "Access educational content and fun activities designed for kids of all ages!",
+                  ),
+                  _buildPage(
+                    title: "Monitor Usage",
+                    subtitle:
+                        "Track screen time, set daily limits, and keep an eye on app usage.",
+                  ),
+                  _buildPage(
+                    title: "Parental Guidance",
+                    subtitle:
+                        "Get insights on your child's activity and guide them with educational content.",
+                  ),
+                  _buildLastPage(
+                    context: context,
+                    title: "Safe & Fun Learning",
+                    subtitle:
+                        "Ensure your child has a safe and enjoyable learning experience with EduFun!",
+                    buttonText: "Get Started",
+                  ),
+                ],
+              ),
+            ),
+            _buildIndicator(),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ]),
     );
   }
 

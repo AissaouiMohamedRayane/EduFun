@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/ParentSideComponents/Buy.dart';
-import 'package:frontend/components/ParentSideComponents/HeadingandDushboard.dart';
-import 'package:frontend/components/ParentSideComponents/Home/ScreenTime.dart';
-import 'package:frontend/components/ParentSideComponents/Home/ScreenTimeLimits.dart';
-import 'package:frontend/components/ParentSideComponents/screens/ParentSide/EditDeviceScreen.dart';
-import 'package:frontend/components/ParentSideComponents/screens/ParentSide/KidsAccountMangement.dart';
-import 'package:frontend/components/ParentSideComponents/screens/familycontrole/CollaborativeLearning.dart';
+import 'package:EduFun/components/ParentSideComponents/Buy.dart';
+import 'package:EduFun/components/ParentSideComponents/HeadingandDushboard.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/ScreenTime.dart';
+import 'package:EduFun/components/ParentSideComponents/Home/ScreenTimeLimits.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/ParentSide/EditDeviceScreen.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/ParentSide/KidsAccountMangement.dart';
+import 'package:EduFun/components/ParentSideComponents/screens/familycontrole/CollaborativeLearning.dart';
 
 class FamilyControle extends StatefulWidget {
   const FamilyControle({super.key});
