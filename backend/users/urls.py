@@ -18,6 +18,7 @@ urlpatterns = [
     path('loginChild/', login_child, name='login-child'),
 
     
+    path('getchild/', views.get_child_info, name='get-child'),
     path('getchildren/', views.get_children, name='get-children'),
     path('addchild/', views.add_child, name='add-child'),
     path('children/<int:id>/', views.edit_child, name='edit-child'),

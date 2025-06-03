@@ -368,6 +368,7 @@ def edit_child(request, id):
         
         
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_parent_info(request):
     """
@@ -410,7 +411,47 @@ def get_parent_info(request):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
         
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_child_info(request):
+    """
+    Get all information of the currently logged-in child.
+    Requires authentication.
+    """
+    try:
+        # Check if the logged-in user is a child
+        try:
+            child = Child.objects.get(user=request.user)
+        except Child.DoesNotExist:
+            return Response(
+                {'error': 'Only children can access this endpoint'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         
+        user = child.user
+        parent = child.parent
+        
+        child_data = {
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'avatar': child.avatar,
+            'points': child.points,
+            'hints_available': child.hints_available,
+            'fifty_fifty_available': child.fifty_fifty_available,
+            'level': child.current_level,
+            
+        }
+        
+        return Response(child_data, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def edit_parent(request):

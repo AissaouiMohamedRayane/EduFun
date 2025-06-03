@@ -28,13 +28,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  
   shared_preferences: ^2.5.3
   http: ^1.4.0
   provider: ^6.1.5
   intl: ^0.20.2
   video_player: ^2.9.5
-
 
   flutter:
     sdk: flutter
@@ -60,9 +58,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo.png"
-  min_sdk_android: 21 
-  
-
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,6 +80,7 @@ flutter:
     - assets/images/childSide/gamesMap.png
     - assets/images/childSide/childSideBackground.png
     - assets/images/childSide/Star.png
+    - assets/images/childSide/background_game1.jpg
 
     - assets/images/profileChildrenPictures/20.png
     - assets/images/profileChildrenPictures/21.png
@@ -91,6 +88,7 @@ flutter:
     - assets/images/profileChildrenPictures/23.png
     - assets/images/1.png
     - assets/images/Graph.png
+    - assets/images/logo.png
     - assets/images/hint.webp
     - assets/images/geo.jpeg
     - assets/images/bgImage.png

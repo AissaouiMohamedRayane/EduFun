@@ -23,12 +23,12 @@ class Question {
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       id: json['id'],
-      text: json['text'],
+      text: json['text'].toString(),
       difficulty: json['difficulty'],
-      category: json['category'],
-      choices: List<String>.from(json['choices']),
-      answer: json['answer'],
-      hint: json['hint'],
+      category: json['category'].toString(),
+      choices: List<String>.from(json['choices'].map((e) => e.toString())),
+      answer: json['answer'].toString(),
+      hint: json['hint'].toString(),
     );
   }
 
@@ -62,8 +62,24 @@ class Game {
     required this.geography,
     required this.history,
     required this.islamic,
-    required this.requiredScore,
+    this.requiredScore = 1,
   });
+  Question getByCategory(String category) {
+    switch (category) {
+      case 'math':
+        return math;
+      case 'science':
+        return science;
+      case 'history':
+        return history;
+      case 'islamic':
+        return islamic;
+      case 'geography':
+        return geography;
+      default:
+        throw Exception('Invalid category: $category');
+    }
+  }
 
   // Factory constructor to create a Game from a JSON map
   factory Game.fromJson(Map<String, dynamic> json) {
@@ -74,7 +90,7 @@ class Game {
       geography: Question.fromJson(json['geography_question']),
       history: Question.fromJson(json['history_question']),
       islamic: Question.fromJson(json['islamic_question']),
-      requiredScore: json['required_score'],
+      requiredScore: json['required_score'] ?? 1,
     );
   }
 

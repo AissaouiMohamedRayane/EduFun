@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../layout/childSideLayout.dart';
 import 'package:provider/provider.dart';
 import '../services/models/users.dart';
+import '../services/models/token.dart';
 import './gamesPage.dart';
 
 class ChildSideHome extends StatefulWidget {
@@ -20,6 +21,7 @@ class _ChildSideHomeState extends State<ChildSideHome> {
     super.didChangeDependencies();
     if (!_isInitialized) {
       context.read<ChildProvider>().initializeChild();
+      context.read<TokenProvider>().initializeToken();
       _isInitialized = true;
     }
   }
@@ -31,10 +33,9 @@ class _ChildSideHomeState extends State<ChildSideHome> {
     return childProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : ChildSideLayout(
-          home: true,
+            home: true,
             child: Column(
               children: [
-               
                 const SizedBox(
                   height: 100,
                 ),

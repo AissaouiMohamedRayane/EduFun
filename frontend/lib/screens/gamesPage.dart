@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/models/users.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../services/models/games.dart';
+import '../services/API/games.dart';
+import '../services/models/token.dart';
+import './gameExample.dart';
+
+const String url = 'http://192.168.202.183:8000';
 
 class Gamespage extends StatefulWidget {
   @override
@@ -26,8 +34,9 @@ class _GamespageState extends State<Gamespage> {
   @override
   Widget build(BuildContext context) {
     final childProvider = Provider.of<ChildProvider>(context);
+    final tokenProvider = Provider.of<TokenProvider>(context);
 
-    return childProvider.isLoading
+    return childProvider.isLoading || tokenProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             body: SafeArea(
@@ -51,8 +60,26 @@ class _GamespageState extends State<Gamespage> {
                       top: position.dy,
                       child: GestureDetector(
                         onTap: isUnlocked
-                            ? () {
-                                print("Tapped Level ${index + 1}");
+                            ? () async {
+                                final game = await getGameById(
+                                    tokenProvider.token, index + 1);
+                                if (game != null) {
+                                  print(game);
+                                  Navigator.of(
+                                    context,
+                                  ).push(MaterialPageRoute(
+                                      builder: (context) => GameExample(
+                                            game: game,
+                                            gameQuestion: 'math',
+                                          )));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("failed to load the game"),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
                               }
                             : null,
                         child: Container(

@@ -18,9 +18,11 @@ Future<Game?> getGameById(String? token, int id) async {
     );
 
     if (response.statusCode == 200) {
+      print('test10');
       // The login was successful
       final Map<String, dynamic> responseData =
           json.decode(utf8.decode(response.bodyBytes));
+      print(responseData);
 
       // Save the token for future API requests (e.g., using shared_preferences)
       return Game.fromJson(responseData);

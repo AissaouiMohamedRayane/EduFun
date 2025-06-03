@@ -9,6 +9,8 @@ from users.models import Child
 from .models import PowerUp, Inventory
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def powerup_list(request):
     try:
         powerups = PowerUp.objects.filter(powerup_type__in=['HINT', 'FIFTY_FIFTY'])
@@ -30,7 +32,8 @@ def powerup_list(request):
                 'name': p.name,
                 'price': p.price,
                 'image_url': image_url,
-                'type': p.powerup_type
+                'type': p.powerup_type,
+                'descreption' :p.description
             })
         
         return Response(data, status=status.HTTP_200_OK)
